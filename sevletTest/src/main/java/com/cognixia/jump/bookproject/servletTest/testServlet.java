@@ -49,6 +49,9 @@ public class testServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//GET parameter that says what post request is
+		
+		//Feed that parameter in a switch statment which then either handles it in this method or calls more specfic methods.
 		doGet(request, response);
 	}
 
