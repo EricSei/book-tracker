@@ -1,100 +1,86 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import Layout from '../components/Layout';
+import axios from "axios";
+import React, { useState } from "react";
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Image,
+  Message,
+  Segment,
+} from "semantic-ui-react";
+import Layout from "../components/Layout";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
-
-    const [title, setTitle ] = useState("");
-
-     // Declare a new state variable, which we'll call "count"
-  const [count, setCount] = useState(0);
-  const [ username, setUserName ] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  let data = {
-    username: 'Sammy'
-  }
-
-  let fetchData = {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: new Headers({
-      'Content-Type': 'application/json; charset=UTF-8'
+  const login = (e) => {
+    e.preventDefault();
+    axios({
+      method: "post",
+      url: "http://localhost:8080/reactmaven/ReactServlet",
+      data: {
+        username: username,
+        password: password,
+      },
     })
-  }
-    
-    const addItem = (e) => {
-        e.preventDefault();
-        console.log(title);
-        //api call 
-    }
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
-    const handleSubmitTest = (e) => {
-        e.preventDefault();
-        fetch("http://localhost:8080/BOOK-TRACKER-TEST/ReactServlet", fetchData)
-        .then((response) => response.text())
-        .then((text) => {
-          console.log("here is the text from servlet: ", text);
-        });
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios({
-            method: "POST",
-            url: "http://localhost:8080/BOOK-TRACKER-TEST/ReactServlet",
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-              })
-              ,
-              data : { "eric" : "eric"}
-        })
-        .then( (response) => {
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    }
-
-
-
-    return (
-        <Layout>
-       
-          {/* <div>
-            <p>You clicked {count} times</p>
-            <button onClick={() => setCount(count + 1)}>
-                Click me
-            </button>
-          </div> */}
-
-        <form onSubmit={handleSubmit} class="ui form">
-            <div >
-            <label>Sign In</label>
-            <input
-                onChange={(e) => setUserName(e.target.value)}
-                type="text"
-                name="title"
-
-                value={username}
-            />
-            <input
-                onChange={(e) => setPassword(e.target.value)}
+  return (
+    <Layout>
+      <Grid
+        textAlign="center"
+        style={{ height: "100vh" }}
+        verticalAlign="middle"
+      >
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h2" color="teal" textAlign="center">
+            <Image src="/logo.png" /> Log-in to your account
+          </Header>
+          <Form size="large">
+            <Segment stacked>
+              <Form.Input
+                fluid
+                icon="user"
+                iconPosition="left"
+                placeholder="Username"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+              />
+              <Form.Input
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password"
                 type="password"
-                name="passowrd"
-                value={password}
-            />
-            </div>
-            <button type="submit">
-                submit
-            </button>
-        </form>
-        </Layout>
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
 
-       
-    )
-}
+              <Button color="teal" fluid size="large" onClick={login}>
+                Login
+              </Button>
+            </Segment>
+          </Form>
+          <Message>
+            New to us? <a href="#">Sign Up</a>
+          </Message>
+        </Grid.Column>
+      </Grid>
+
+      <Link />
+    </Layout>
+  );
+};
 
 export default SignIn;
