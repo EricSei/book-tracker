@@ -19,6 +19,9 @@ public class BookDAOClass implements BookDAO {
 		// TODO Auto-generated constructor stub
 	}
 	private Connection conn = null;
+	
+	//Creates a list of all books in database
+	//Can return null, if db empty
 	@Override
 	public List<Book> getAllBooks() {
 		// TODO Auto-generated method stub
@@ -39,7 +42,7 @@ public class BookDAOClass implements BookDAO {
 						rs.getInt("seriesID"), rs.getInt("seriesOrder"), rs.getBoolean("released"),
 						rs.getInt("franchiseID"), rs.getString("coverURL"), rs.getString("description")
 						);
-				System.out.println(book);
+				//System.out.println(book);
 				bookList.add(book);
 				
 			}
@@ -52,7 +55,7 @@ public class BookDAOClass implements BookDAO {
 				rs.close();
 				pstmt.close();
 
-				conn.close();
+				//conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -60,6 +63,7 @@ public class BookDAOClass implements BookDAO {
 		return null;
 	}
 
+	//No implementation. Use getAverageRating from userBooksDAOClss
 	@Override
 	public float getAverageRating(int id) {
 		return 0;
@@ -68,6 +72,9 @@ public class BookDAOClass implements BookDAO {
 		
 	}
 
+	//Returns a book that matches the parameter ID
+	//Takes one int parameter, int id to be checked
+	//If the book under that ID doesn't exist, returns null
 	@Override
 	public Book getBookbyId(int id) {
 		conn = ConnectionManagerProperties.getConnection();
@@ -101,14 +108,16 @@ public class BookDAOClass implements BookDAO {
 		try {
 			rs.close();
 			pstmt.close();
-	//		conn.close();
+			//conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	return null;
 }
-
+	//Returns a book that matches the parameter title
+	//Takes one parameter, String name
+	//can return null, if no book exists with title
 	@Override
 	public Book getBookbyTitle(String name) {
 		conn = ConnectionManagerProperties.getConnection();
@@ -130,7 +139,7 @@ public class BookDAOClass implements BookDAO {
 					rs.getInt("seriesID"), rs.getInt("seriesOrder"), rs.getBoolean("released"),
 					rs.getInt("franchiseID"), rs.getString("coverURL"), rs.getString("description")
 					);
-			System.out.println(book);
+			//System.out.println(book);
 		
 			
 		}
@@ -142,7 +151,7 @@ public class BookDAOClass implements BookDAO {
 		try {
 			rs.close();
 			pstmt.close();
-			conn.close();
+			//conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -150,6 +159,9 @@ public class BookDAOClass implements BookDAO {
 	return null;
 }
 
+	//Returns all book with author equal to parameter
+	//Takes one parameter, String name
+	//Can return null, if author has no books
 	@Override
 	public List<Book> getBookbyAuthor(String name) {
 		conn = ConnectionManagerProperties.getConnection();
@@ -171,7 +183,7 @@ public class BookDAOClass implements BookDAO {
 					rs.getInt("seriesID"), rs.getInt("seriesOrder"), rs.getBoolean("released"),
 					rs.getInt("franchiseID"), rs.getString("coverURL"), rs.getString("description")
 					);
-			System.out.println(book);
+			//System.out.println(book);
 			bookList.add(book);
 		
 			
@@ -184,7 +196,7 @@ public class BookDAOClass implements BookDAO {
 		try {
 			rs.close();
 			pstmt.close();
-			conn.close();
+			//conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -192,13 +204,20 @@ public class BookDAOClass implements BookDAO {
 	return null;
 }
 
+	//adds given book to db
+	//Takes one parameter, given book
+	//If book exists with that title, will return false;
+	//Can result in errors. if seriesId or franchiseId aren't properly set, will result in can't update child row sql error
 	@Override
 	public boolean addBook(Book book) {
 		// TODO Auto-generated method stub
 		
 		conn = ConnectionManagerProperties.getConnection();
 		PreparedStatement pstmt = null;
-	
+		if(this.getBookbyTitle(book.getTitle()) != null) {
+			return false;
+		}
+		
 		int query = 0;
 		
 		try {
@@ -241,7 +260,7 @@ public class BookDAOClass implements BookDAO {
 			
 			try {
 				pstmt.close();
-				//conn.close();
+				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -253,40 +272,12 @@ public class BookDAOClass implements BookDAO {
 		
 	}
 
-	@Override
-	public boolean deleteBookbyId(int id) {
-		conn = ConnectionManagerProperties.getConnection();
-		PreparedStatement pstmt = null;
-		//ResultSet rs = null;
-		boolean success = false;
-		
-		try {
-			
-			if (id != -1 ) {
-				pstmt = conn.prepareStatement(
-						"DELETE FROM books WHERE bookID = ?"
-						);
-				pstmt.setInt(1, id);
-				success = pstmt.execute();
-				System.out.println("AAAA" + success);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				//rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return success;
-		
-	}
-
+	
+	//returns number of active rows in database
+	//Autoincremented IDS don't account for deleted rows, so there will be gaps
+	//For instance, if book with id 30 is deleted, and the last row is id 57, the next insert function will add to row where id = 58.
+	//This doesn't return deleted rows
+	//Do not use to get last id
 	public int getDBSize() {
 		conn = ConnectionManagerProperties.getConnection();
 		PreparedStatement pstmt = null;
@@ -306,7 +297,7 @@ public class BookDAOClass implements BookDAO {
 			try {
 				rs.close();
 				pstmt.close();
-				conn.close();
+				//conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -315,21 +306,28 @@ public class BookDAOClass implements BookDAO {
 		
 	}
 	
-	public boolean deleteBookbyTitle(String title) {
+	//Deletes the book with given id
+	//Takes one parameter, int id of object to be deleted
+	@Override
+	public boolean deleteBookbyId(int id) {
 		conn = ConnectionManagerProperties.getConnection();
 		PreparedStatement pstmt = null;
 		//ResultSet rs = null;
 		boolean success = false;
+		int temp;
 		
 		try {
 			
-			if (title != "" ) {
+			if (id != -1 ) {
 				pstmt = conn.prepareStatement(
-						"DELETE FROM books WHERE title = ?"
+						"DELETE FROM books WHERE bookID = ?"
 						);
-				pstmt.setString(1, title);
-				success = pstmt.execute();
-				System.out.println("AAAA" + success);
+				pstmt.setInt(1, id);
+				temp = pstmt.executeUpdate();
+				//System.out.println(success);
+				if(temp == 1) {
+					success = true;
+				}
 			}
 			
 		} catch (SQLException e) {
@@ -338,7 +336,47 @@ public class BookDAOClass implements BookDAO {
 			try {
 				//rs.close();
 				pstmt.close();
-//				conn.close();
+				//conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return success;
+		
+	}
+	
+	//Deletes book with parameter title
+	//returns true if book was deleted
+	public boolean deleteBookbyTitle(String title) {
+		conn = ConnectionManagerProperties.getConnection();
+		PreparedStatement pstmt = null;
+		//ResultSet rs = null;
+		boolean success = false;
+		int temp;
+		
+		try {
+			
+			if (title != "" ) {
+				pstmt = conn.prepareStatement(
+						"DELETE FROM books WHERE title = ?"
+						);
+				pstmt.setString(1, title);
+				System.out.println(pstmt);
+				temp = pstmt.executeUpdate();
+				if(temp == 1) {
+					success = true;
+				}
+				//System.out.println(success);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				//rs.close();
+				pstmt.close();
+				//conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -411,7 +449,7 @@ public class BookDAOClass implements BookDAO {
 					try {
 						rs.close();
 						pstmt.close();
-						conn.close();
+						//conn.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
