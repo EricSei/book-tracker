@@ -29,13 +29,15 @@ public void setRating(int rating) {
 private int currentPage;
 private char status;
 private int rating;
-public UserBook(String title, int id, String author, String publisher, String genre, String coverURL, boolean released,
-		int pageCount, int franchiseId, int seriesOrder, int seriesId, int userID, int currentPage, char status,
-		int rating) {
-	super(title, id, author, publisher, genre, coverURL, released, pageCount, franchiseId, seriesOrder, seriesId);
+public UserBook(int id, String title, String author, String publisher, int pageCount, String genre, int seriesId,
+		int seriesOrder, boolean released, int franchiseId, String coverURL, String description, int userID,
+		int currentPage, char status, int rating) {
+	super(id, title, author, publisher, pageCount, genre, seriesId, seriesOrder, released, franchiseId, coverURL,
+			description);
 	this.userID = userID;
 	this.currentPage = currentPage;
 	this.status = status;
 	this.rating = rating;
 }
+
 }

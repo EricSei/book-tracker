@@ -11,7 +11,7 @@ public interface BookDAO {
 	Book getBookbyAuthor(String name);
 	boolean addBook(Book book);
 	boolean deleteBookbyId(int id);
-	boolean deleteBook(Book book);
+	
 	boolean updateBook(Book book);
 	
 	

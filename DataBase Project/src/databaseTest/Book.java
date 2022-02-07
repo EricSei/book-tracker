@@ -8,13 +8,15 @@ public class Book {
 	private String Publisher;
 	private String Genre;
 	private String coverURL;
+	private String description;
+	
 	private boolean Released ;
 	private int pageCount;
-	private int franchiseId;
+	private Integer franchiseId;
 	private int seriesOrder;
-	private int seriesId;
-	public Book(String title, int id, String author, String publisher, String genre, String coverURL, boolean released,
-			int pageCount, int franchiseId, int seriesOrder, int seriesId) {
+	private Integer seriesId;
+	public Book(int id, String title, String author, String publisher,int pageCount, String genre, Integer seriesId, int seriesOrder, boolean released,  Integer franchiseId, String coverURL, String description 
+			   ) {
 		
 		Title = title;
 		this.id = id;
@@ -27,6 +29,14 @@ public class Book {
 		this.franchiseId = franchiseId;
 		this.seriesOrder = seriesOrder;
 		this.seriesId = seriesId;
+		this.description = description;
+	}
+	@Override
+	public String toString() {
+		return "Book [Title=" + Title + ", id=" + id + ", Author=" + Author + ", Publisher=" + Publisher + ", Genre="
+				+ Genre + ", coverURL=" + coverURL + ", description=" + description + ", Released=" + Released
+				+ ", pageCount=" + pageCount + ", franchiseId=" + franchiseId + ", seriesOrder=" + seriesOrder
+				+ ", seriesId=" + seriesId + "]";
 	}
 	public String getTitle() {
 		return Title;
@@ -76,7 +86,7 @@ public class Book {
 	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
-	public int getFranchiseId() {
+	public Integer getFranchiseId() {
 		return franchiseId;
 	}
 	public void setFranchiseId(int franchiseId) {
@@ -88,12 +98,17 @@ public class Book {
 	public void setSeriesOrder(int seriesOrder) {
 		this.seriesOrder = seriesOrder;
 	}
-	public int getSeriesId() {
+	public Integer getSeriesId() {
 		return seriesId;
 	}
 	public void setSeriesId(int seriesId) {
 		this.seriesId = seriesId;
 	}
-	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }
