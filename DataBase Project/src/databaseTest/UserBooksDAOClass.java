@@ -176,7 +176,7 @@ public class UserBooksDAOClass implements UserBooksDAO {
 					"insert into userbooks(userID, bookID, currentPage, currStatus, rating) "
 					+ "values(?,?,?,?,?)"
 					);
-			pstmt.setInt(1, 0);
+			pstmt.setInt(1, book.getUserID());
 			pstmt.setInt(2, book.getBookId());
 			pstmt.setInt(3, book.getCurrentPage());
 			pstmt.setString(4, String.valueOf(book.getStatus()));
