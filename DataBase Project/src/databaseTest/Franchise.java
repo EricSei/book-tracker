@@ -20,6 +20,12 @@ public class Franchise {
 	private int franchiseID;
 	private String franchiseName;
 	
+	public Franchise(int franchiseID, String franchiseName) {
+		super();
+		this.franchiseID = franchiseID;
+		this.franchiseName = franchiseName;
+	}
+
 	public Franchise() {
 		// TODO Auto-generated constructor stub
 		
