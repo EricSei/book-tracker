@@ -31,18 +31,20 @@ LIST
 	
 	
 	public static void main(String[] args) {
-		BookDAOClass bog = new BookDAOClass();
-		UserDAOClass Uog = new UserDAOClass();
-		List<User> UserList = Uog.getAllUsers();
+		UserBooksDAOClass Tog = new UserBooksDAOClass();
+		List<UserBook> yah = Tog.getUserBookbyId(4);
+		//BookDAOClass bog = new BookDAOClass();
+		//UserDAOClass Uog = new UserDAOClass();
+		//List<User> UserList = Uog.getAllUsers();
 		//User bill = Uog.authenticateUser("admin", "password");
 		//Uog.deleteUserbyUsernaem("Dave");
-		System.out.println( Uog.authenticateUser("admin", "ugh"));
+		///System.out.println( Uog.authenticateUser("admin", "ugh"));
 		
 	//	User dave = new User(0, "Dave", "root");
 		//Uog.addUser(dave);
 	//.	Book bog2 = new Book(51, "Bill", "Bob", "SHCMILL", 32, "GOUG", null, 0, false, null, "", " ");
 	//	System.out.println(bog.addBook(bog2));
-		List<Book> bog3 = bog.getAllBooks();
+	//	List<Book> bog3 = bog.getAllBooks();
 		//Book bog1 = bog.getBookbyAuthor("Brandon Sanderson");
 	}
 	

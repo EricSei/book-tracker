@@ -3,7 +3,7 @@ package databaseTest;
 public class Book {
 	
 	private String Title;
-	private int id;
+	private int bookid;
 	private String Author;
 	private String Publisher;
 	private String Genre;
@@ -19,7 +19,7 @@ public class Book {
 			   ) {
 		
 		Title = title;
-		this.id = id;
+		this.bookid = id;
 		Author = author;
 		Publisher = publisher;
 		Genre = genre;
@@ -33,7 +33,7 @@ public class Book {
 	}
 	@Override
 	public String toString() {
-		return "Book [Title=" + Title + ", id=" + id + ", Author=" + Author + ", Publisher=" + Publisher + ", Genre="
+		return "Book [Title=" + Title + ", id=" + bookid + ", Author=" + Author + ", Publisher=" + Publisher + ", Genre="
 				+ Genre + ", coverURL=" + coverURL + ", description=" + description + ", Released=" + Released
 				+ ", pageCount=" + pageCount + ", franchiseId=" + franchiseId + ", seriesOrder=" + seriesOrder
 				+ ", seriesId=" + seriesId + "]";
@@ -44,11 +44,11 @@ public class Book {
 	public void setTitle(String title) {
 		Title = title;
 	}
-	public int getId() {
-		return id;
+	public int getBookId() {
+		return bookid;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setBookId(int id) {
+		this.bookid = id;
 	}
 	public String getAuthor() {
 		return Author;
