@@ -98,7 +98,7 @@ public class BookDAOClass implements BookDAO {
 		try {
 			rs.close();
 			pstmt.close();
-			conn.close();
+	//		conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -180,7 +180,7 @@ public class BookDAOClass implements BookDAO {
 		try {
 			rs.close();
 			pstmt.close();
-			conn.close();
+		///	conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -313,7 +313,11 @@ public class BookDAOClass implements BookDAO {
 					
 					if (id != -1 ) {
 						pstmt = conn.prepareStatement(
-								"update books set bookID = ?, set title = ?, set authorName = ?, set publisher = ?, set pageCount = ?, set genre = ?, set seriesID = ?, set seriesOrder = ?, set released = ?, set franchiseID = ?, set coverURL = ?, set description = ?");
+								"update books set bookID = ?, set title = ?, set authorName = ?, set publisher = ?, set pageCount = ?, set genre = ?, set seriesID = ?, set seriesOrder = ?, set released = ?, set franchiseID = ?, set coverURL = ?, set description = ?"
+								
+								+ " where bookID = ?"
+								
+					);
 						pstmt.setInt(1, 0);
 						pstmt.setString(2, book.getTitle());
 						pstmt.setString(3, book.getAuthor());

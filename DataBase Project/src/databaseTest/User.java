@@ -11,6 +11,18 @@ public class User {
 		this.password = password;
 		this.readingList = readingList;
 	}
+public User(int userId, String username, String password) {
+		
+		this.userId = userId;
+		this.username = username;
+		this.password = password;
+		this.readingList = null;
+	}
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", readingList="
+				+ readingList + "]";
+	}
 	private int userId;
 	private String username;
 	private String password;
