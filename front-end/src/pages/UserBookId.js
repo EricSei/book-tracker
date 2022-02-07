@@ -20,7 +20,7 @@ const UserBookId = (props) =>{
                     <Table.Cell negative> Completed </Table.Cell>
                 }
                 
-                <Table.Cell>{rating}</Table.Cell>
+                <Table.Cell >{rating}</Table.Cell>
                
             </Table.Row>
     )
