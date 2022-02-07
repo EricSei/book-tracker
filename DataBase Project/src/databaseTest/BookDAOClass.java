@@ -3,6 +3,7 @@ package databaseTest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -61,37 +62,7 @@ public class BookDAOClass implements BookDAO {
 
 	@Override
 	public float getAverageRating(int id) {
-		
-		{
-			conn = ConnectionManagerProperties.getConnection();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-			pstmt = conn.prepareStatement(
-					"select averageRating(?)"
-					);
-			pstmt.setInt(1, id);
-			rs = pstmt.executeQuery();
-			
-			rs.next();
-			float returnvalue = rs.getFloat(1);
-				
-	
-			return returnvalue;
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				rs.close();
-				pstmt.close();
-		//		conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 		return 0;
-	}
 		
 		// TODO Auto-generated method stub
 		
@@ -118,7 +89,7 @@ public class BookDAOClass implements BookDAO {
 					rs.getInt("seriesID"), rs.getInt("seriesOrder"), rs.getBoolean("released"),
 					rs.getInt("franchiseID"), rs.getString("coverURL"), rs.getString("description")
 					);
-			System.out.println(book);
+			//System.out.println(book);
 		
 			
 		}
@@ -180,7 +151,7 @@ public class BookDAOClass implements BookDAO {
 }
 
 	@Override
-	public Book getBookbyAuthor(String name) {
+	public List<Book> getBookbyAuthor(String name) {
 		conn = ConnectionManagerProperties.getConnection();
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -192,7 +163,7 @@ public class BookDAOClass implements BookDAO {
 		pstmt.setString(1, name);
 		rs = pstmt.executeQuery();
 		
-	
+		List<Book> bookList = new ArrayList<>();
 		Book book = null;
 		while(rs.next()) {
 			 book = new Book(rs.getInt("bookID"), rs.getString("title"), rs.getString("authorName"),
@@ -201,10 +172,11 @@ public class BookDAOClass implements BookDAO {
 					rs.getInt("franchiseID"), rs.getString("coverURL"), rs.getString("description")
 					);
 			System.out.println(book);
+			bookList.add(book);
 		
 			
 		}
-		return book;
+		return bookList;
 		
 	}catch(SQLException e) {
 		e.printStackTrace();
@@ -212,7 +184,7 @@ public class BookDAOClass implements BookDAO {
 		try {
 			rs.close();
 			pstmt.close();
-		///	conn.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -223,7 +195,7 @@ public class BookDAOClass implements BookDAO {
 	@Override
 	public boolean addBook(Book book) {
 		// TODO Auto-generated method stub
-
+		
 		conn = ConnectionManagerProperties.getConnection();
 		PreparedStatement pstmt = null;
 	
@@ -285,25 +257,86 @@ public class BookDAOClass implements BookDAO {
 	public boolean deleteBookbyId(int id) {
 		conn = ConnectionManagerProperties.getConnection();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		//ResultSet rs = null;
 		boolean success = false;
 		
 		try {
 			
 			if (id != -1 ) {
 				pstmt = conn.prepareStatement(
-						"delete from books"
-						+ "where bookID = ?"
+						"DELETE FROM books WHERE bookID = ?"
 						);
 				pstmt.setInt(1, id);
 				success = pstmt.execute();
+				System.out.println("AAAA" + success);
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
+				//rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return success;
+		
+	}
+
+	public int getDBSize() {
+		conn = ConnectionManagerProperties.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSetMetaData rsmd = null;
+		int retVal;
+		try {
+			pstmt = conn.prepareStatement("SELECT COUNT(*) FROM books");
+			rs = pstmt.executeQuery();
+			rs.next();
+			retVal = rs.getInt(1);
+			return retVal;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
 				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return 0;
+		
+	}
+	
+	public boolean deleteBookbyTitle(String title) {
+		conn = ConnectionManagerProperties.getConnection();
+		PreparedStatement pstmt = null;
+		//ResultSet rs = null;
+		boolean success = false;
+		
+		try {
+			
+			if (title != "" ) {
+				pstmt = conn.prepareStatement(
+						"DELETE FROM books WHERE title = ?"
+						);
+				pstmt.setString(1, title);
+				success = pstmt.execute();
+				System.out.println("AAAA" + success);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				//rs.close();
 				pstmt.close();
 //				conn.close();
 			} catch (SQLException e) {
@@ -314,8 +347,6 @@ public class BookDAOClass implements BookDAO {
 		return success;
 		
 	}
-
-	
 
 	@Override
 	public boolean updateBook(Book book) {
@@ -380,7 +411,7 @@ public class BookDAOClass implements BookDAO {
 					try {
 						rs.close();
 						pstmt.close();
-//						conn.close();
+						conn.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}

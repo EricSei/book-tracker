@@ -20,13 +20,13 @@ public class ConnectionManagerProperties {
 	private static void makeConnection() {
 		Properties props = new Properties();
 		URL = props.getProperty("url");
-		USERNAME =props.getProperty("password");
+		USERNAME =props.getProperty("username");
 		PASSWORD = props.getProperty("password");
 		
 		try {
 			props.load(new FileInputStream("./resources/config.properties"));
 			URL = props.getProperty("url");
-			USERNAME =props.getProperty("password");
+			USERNAME =props.getProperty("username");
 			PASSWORD = props.getProperty("password");
 			System.out.println(PASSWORD);
 			connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -48,6 +48,7 @@ public class ConnectionManagerProperties {
 	}
 	
 	public static Connection getConnection() {
+		connection = null;
 		if (connection == null) {
 			makeConnection();
 			

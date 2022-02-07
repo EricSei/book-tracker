@@ -8,7 +8,7 @@ public interface BookDAO {
 	float getAverageRating(int id);
 	Book getBookbyId(int id);
 	Book getBookbyTitle(String name);
-	Book getBookbyAuthor(String name);
+	List<Book> getBookbyAuthor(String name);
 	boolean addBook(Book book);
 	boolean deleteBookbyId(int id);
 	
