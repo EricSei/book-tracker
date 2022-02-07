@@ -7,12 +7,30 @@ public class Series {
 	List<Book> BooksInSeries;
 	private int seriesID;
 	private int serLength;
+	private String seriesName;
+	public String getSeriesName() {
+		return seriesName;
+	}
+
+	public void setSeriesName(String seriesName) {
+		this.seriesName = seriesName;
+	}
 	private boolean finished;
 	private int franchiseID;
 	public Series(List<Book> series, int seriesID, int serLength, boolean finished, int franchiseID) {
 		
 		BooksInSeries = null;
 		this.seriesID = seriesID;
+		this.serLength = serLength;
+		this.finished = finished;
+		this.franchiseID = franchiseID;
+	}
+	
+public Series( int seriesID, String seriesName, int serLength, boolean finished, int franchiseID) {
+		
+		BooksInSeries = null;
+		this.seriesID = seriesID;
+		this.seriesName =seriesName;
 		this.serLength = serLength;
 		this.finished = finished;
 		this.franchiseID = franchiseID;

@@ -8,8 +8,8 @@ public interface SeriesDAO {
 
 	Series getSeriesbyId(int id);
 	Series getSeriesbyName(String name);
-	boolean addSeries(Series book);
+	boolean addSeries(Series series);
 	boolean deleteSeriesbyId(int id);
-	boolean deleteSeries(Series book);
-	boolean updateSeries(Series book);
+	boolean deleteSeries(Series series);
+	boolean updateSeries(Series series);
 }
