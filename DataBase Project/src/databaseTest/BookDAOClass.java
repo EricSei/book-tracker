@@ -61,9 +61,41 @@ public class BookDAOClass implements BookDAO {
 
 	@Override
 	public float getAverageRating(int id) {
+		
+		{
+			conn = ConnectionManagerProperties.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(
+					"select averageRating(?)"
+					);
+			pstmt.setInt(1, id);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			float returnvalue = rs.getFloat(1);
+				
+	
+			return returnvalue;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+		//		conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+		
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	
 
 	@Override
 	public Book getBookbyId(int id) {
