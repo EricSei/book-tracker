@@ -90,12 +90,12 @@ public class BookDAOClass implements BookDAO {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return 0;
 	}
 		
 		// TODO Auto-generated method stub
-		return 0;
-	
+		
+	}
 
 	@Override
 	public Book getBookbyId(int id) {
