@@ -24,21 +24,7 @@ LIST
 	 */
 	
 	public static String SQLCreate(String table, String[] doug )  {
-	//	int count = stmt.executeUpdate(
-		//		"insert into " + table +" values(" + doug[0] + ", " + 'street', 'city','TX', '12345')");
-		/*
-		 * 	stmt =  conn.createStatement();
-			
-			int count = stmt.executeUpdate(
-					"insert into address values(null, 'street', 'city','TX', '12345')");
-					
-			System.out.println("Rows inserted: " + count);
-			
-				rs = stmt.executeQuery(
-						"select * from address;"
-						);
-		 */
-		
+	
 		return "Results";
 	}
 	
