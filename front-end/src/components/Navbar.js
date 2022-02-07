@@ -1,38 +1,39 @@
-import React, { useState } from "react";
-import { Image, Menu, Sidebar, Responsive } from "semantic-ui-react";
+import React, { useContext, useState } from "react";
+import { Image, Menu, Sidebar, Responsive,Segment, Input, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import UserContext from "../UserContext";
 
 const NavBar = () => {
-  
+  const {user, setUser} = useContext(UserContext);
   const [activeItem, setActiveItem] = useState(null);
+  // const [user, setUser] = useState("eric");
 
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
   };
-  return (
-    <Menu>
-      <Menu.Item fixed="top" color="teal" sticky inverted> Book Tracker App </Menu.Item>
+
+  const handleSignOut = (e, {name}) =>{
+    setActiveItem(name);
+    setUser(null);
+  }
+
+  if(!user){
+    
+    return(
+    <Segment
+    inverted
+    textAlign='center'
+    style={{ minHeight: 50, padding: '1em 0em' }}
+    vertical
+  >
+    <Menu inverted >
       <Menu.Item
-        as={Link}
-        to={"/user-dashboard-page"}
-        name="User Dashboard"
-        active={activeItem === "user-dashboard-page"}
-        onClick={handleItemClick}
-      />
-      <Menu.Item
-        as={Link}
+        
+        as={Link} 
         to={"/"}
-        name="Landing page"
-        active={activeItem === "Landing page"}
-        onClick={handleItemClick}
-      />
-      <Menu.Item
-        as={Link}
-        to={"/BookPage"}
-        name="BookPage"
-        active={activeItem === "BookPage"}
-        onClick={handleItemClick}
-      />
+        active={activeItem === "Book Tracker App"}
+        fixed="top" color="teal" sticky inverted> Book Tracker App </Menu.Item>
+      
 
       <Menu.Menu position='right'>
       <Menu.Item
@@ -52,7 +53,57 @@ const NavBar = () => {
       </Menu.Menu>
       
     </Menu>
+    </Segment>)
+  }
+
+  return (
+    <Segment
+    inverted
+    textAlign='center'
+    style={{ minHeight: 50, padding: '1em 0em' }}
+    vertical
+  >
+    <Menu inverted >
+      <Menu.Item
+        
+        as={Link} 
+        to={"/"}
+        active={activeItem === "Book Tracker App"}
+        fixed="top" color="teal" sticky inverted> Book Tracker App </Menu.Item>
+      <Menu.Item
+        as={Link}
+        to={"/user-dashboard-page"}
+        name="User Dashboard"
+        active={activeItem === "user-dashboard-page"}
+        onClick={handleItemClick}
+      />
+      <Menu.Item
+        as={Link}
+        to={"/BookPage"}
+        name="BookPage"
+        active={activeItem === "BookPage"}
+        onClick={handleItemClick}
+      />
+
+        <Menu.Menu position='right'>
+          <Icon.Group size='huge'>
+              {/* <Icon size='small' name='circle outline' /> */}
+              <Icon name='user' />
+            </Icon.Group>
+          <Menu.Item
+            as={Link}
+            to={"/signout"}
+            name='signout'
+            active={activeItem === 'signout'}
+            onClick={handleSignOut}
+          />
+        </Menu.Menu>
+    
+      
+    </Menu>
+    </Segment>
   );
+
 };
 
 export default NavBar;

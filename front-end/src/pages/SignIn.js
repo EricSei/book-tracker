@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Form,
@@ -11,8 +11,10 @@ import {
 } from "semantic-ui-react";
 import Layout from "../components/Layout";
 import { Link } from "react-router-dom";
+import UserContext from "../UserContext";
 
 const SignIn = () => {
+  const{user, setUser} = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,6 +30,7 @@ const SignIn = () => {
     })
       .then(function (response) {
         console.log(response.data);
+        //setUser(reponse.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -73,7 +76,7 @@ const SignIn = () => {
             </Segment>
           </Form>
           <Message>
-            New to us? <a href="#">Sign Up</a>
+            New to us?   <Link to="/signup" > Sign Up</Link>
           </Message>
         </Grid.Column>
       </Grid>

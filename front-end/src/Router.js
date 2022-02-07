@@ -10,6 +10,7 @@ import LandingPage from "./pages/LandingPage";
 import UserDashboardPage from "./pages/UserDashboardPage";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import SignOut from "./pages/SignOutPage";
 
 
 
@@ -25,6 +26,7 @@ const AppRouter = () => {
         {/* Private Routes */}
         <Route exact path="/user-dashboard-page" component={UserDashboardPage} />
         <Route exact path="/BookPage" component={BookPage} />
+        <Route exact path="/signout" component={SignOut} />
        
       </Switch>
     </Router>
