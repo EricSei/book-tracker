@@ -1,7 +1,13 @@
 import React from 'react';
-import { Icon, Table } from 'semantic-ui-react'
+import { Icon, Table, Dropdown, Button } from 'semantic-ui-react'
 const UserBookId = (props) =>{
-    const { userID, bookID, currStatus ,rating } = props;
+    const { userID, bookID, currStatus ,rating, updateBookStatus } = props;
+
+    const handleOnClick = (updateStatus) =>{
+        console.log(updateStatus);
+        updateBookStatus( userID, bookID, updateStatus );
+    }
+
     return(
      
            <Table.Row>
@@ -21,6 +27,21 @@ const UserBookId = (props) =>{
                 }
                 
                 <Table.Cell >{rating}</Table.Cell>
+                <Table.Cell >
+                <Button inverted color='red' onClick={() => handleOnClick("p") }>
+                    <Icon name="paper plane" />
+                    To Read
+                </Button>
+                <Button inverted color='olive'  onClick={() => handleOnClick("s")}>
+                 <Icon name="hourglass two" />
+                    Reading
+                </Button>
+                <Button inverted color='green'  onClick={() => handleOnClick("f")}>
+                    <Icon name="chess queen" />
+                   Completed
+                </Button>
+                   
+                </Table.Cell>
                
             </Table.Row>
     )

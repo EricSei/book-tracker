@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 
 
 const SignOut = ()=>{
-    const{setUser} = useContext(UserContext);
+   
     return(
         <Layout>
              <div>

@@ -10,34 +10,37 @@ import {
   Segment,
 } from "semantic-ui-react";
 import Layout from "../components/Layout";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserContext from "../UserContext";
 
 const SignIn = () => {
   const{user, setUser} = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const login = (e) => {
     e.preventDefault();
-    axios({
-      method: "post",
-      url: "http://localhost:8080/reactmaven/ReactServlet",
-      data: {
-        username: username,
-        password: password,
-      },
-    })
-      .then(function (response) {
-        console.log(response.data);
-        //setUser(reponse.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    //comment out line 25 once we get data from real database
+    history.push("/user-dashboard-page")
+    // axios({
+    //   method: "post",
+    //   url: `http://localhost:3000/users`,
+    //   data: {
+    //     username: username,
+    //     password: password,
+    //   },
+    // })
+    //   .then(function (response) {
+    //     // setUser(reponse.data);
+    //     history.push("/user-dashboard-page")
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
-  return (
+  return  (
     <Layout>
       <Grid
         textAlign="center"

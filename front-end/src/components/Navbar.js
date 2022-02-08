@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Image, Menu, Sidebar, Responsive,Segment, Input, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import UserContext from "../UserContext";
 
 const NavBar = () => {
   const {user, setUser} = useContext(UserContext);
   const [activeItem, setActiveItem] = useState(null);
-  // const [user, setUser] = useState("eric");
+  const history = useHistory();
 
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
@@ -15,6 +15,7 @@ const NavBar = () => {
   const handleSignOut = (e, {name}) =>{
     setActiveItem(name);
     setUser(null);
+    history.pushState("/");
   }
 
   if(!user){
@@ -92,7 +93,7 @@ const NavBar = () => {
             </Icon.Group>
           <Menu.Item
             as={Link}
-            to={"/signout"}
+            to={"/"}
             name='signout'
             active={activeItem === 'signout'}
             onClick={handleSignOut}
