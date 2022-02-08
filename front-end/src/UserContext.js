@@ -3,11 +3,9 @@ import React, { useEffect, useState } from 'react';
 const UserContext = React.createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState("eric");
+    const [user, setUser] = useState(null);
 
-    useEffect(()=>{
-
-    },[])
+    
    
   
    

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext  } from 'react';
 import Navbar from '../components/Navbar';
 import { Icon, Table } from 'semantic-ui-react'
 import axios from "axios";
@@ -7,6 +7,7 @@ import axios from "axios";
 import Layout from '../components/Layout'; 
 import BookPageId from './BookPageId';
 import UserBookId from './UserBookId';
+import UserContext from '../UserContext';
 
 // staus : p, s, f
 // rating: 0 -10
@@ -15,6 +16,7 @@ import UserBookId from './UserBookId';
 // f: finished
 
 const BookDashboardPage = () => {
+  const {user, setUser} = useContext(UserContext);
     let [userbooks, setUserBooks] = useState([]);
     //call api book list
     useEffect(()=>{
@@ -24,8 +26,12 @@ const BookDashboardPage = () => {
     const getUserBooks = (e) => {
         // e.preventDefault();
         axios({
-          method: "get",
-          url: "http://localhost:3000/userBooks"
+          method: "post",
+          url: "http://localhost:8080/reactmaven/UserBookServlet" ,
+          data: {
+            userID: "4",
+           // password: password,
+          },
         })
           .then(function (response) {
             console.log(response.data);

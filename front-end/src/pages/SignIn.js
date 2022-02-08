@@ -17,6 +17,8 @@ const SignIn = () => {
   const{user, setUser} = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  //const [userID, setuserID] = useState("");
+
 
   const login = (e) => {
     e.preventDefault();
@@ -26,11 +28,13 @@ const SignIn = () => {
       data: {
         username: username,
         password: password,
+        
       },
     })
       .then(function (response) {
-        console.log(response.data);
-        //setUser(reponse.data);
+       // console.log(response.data);
+       
+        setUser(response.data);
       })
       .catch(function (error) {
         console.log(error);
