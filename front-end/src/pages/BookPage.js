@@ -20,7 +20,7 @@ const BookPage = () => {
         // e.preventDefault();
         axios({
           method: "get",
-          url: "http://localhost:3000/books"
+          url: "http://localhost:8080/reactmaven/BookServlet"
         })
           .then(function (response) {
             console.log(response.data);
