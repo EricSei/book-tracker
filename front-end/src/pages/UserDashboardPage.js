@@ -22,17 +22,26 @@ import UserContext from '../UserContext';
 const BookDashboardPage = () => {
     let [userbooks, setUserBooks] = useState([]);
     const {user, setUser} = useContext(UserContext);
-    const {userID} = user;
+    console.log(user);
+   
     //call api book list
     useEffect(()=>{
-        getUserBooks();
-    },[])
 
-    const getUserBooks = (e) => {
+      if(user){
+        console.log(user.userID);
+        getUserBooks(user.userID);
+      }
+        
+    },[user])
+
+    const getUserBooks = (userID) => {
         // e.preventDefault();
         axios({
-          method: "get",
-          url: "http://localhost:3000/userBooks"
+          method: "post",
+          url: "http://localhost:8080/reactmaven/UserBookServlet",
+          data: {
+            userID: userID
+          }
         })
           .then(function (response) {
             console.log(response.data);

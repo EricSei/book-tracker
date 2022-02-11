@@ -23,21 +23,22 @@ const SignIn = () => {
     e.preventDefault();
     //comment out line 25 once we get data from real database
     history.push("/user-dashboard-page")
-    // axios({
-    //   method: "post",
-    //   url: `http://localhost:3000/users`,
-    //   data: {
-    //     username: username,
-    //     password: password,
-    //   },
-    // })
-    //   .then(function (response) {
-    //     // setUser(reponse.data);
-    //     history.push("/user-dashboard-page")
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    axios({
+      method: "post",
+      url: `http://localhost:8080/reactmaven/LoginServlet`,
+      data: {
+        username: username,
+        password: password,
+      },
+    })
+      .then(function (response) {
+        console.log(response.data);
+        setUser(response.data);
+        history.push("/user-dashboard-page")
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return  (
